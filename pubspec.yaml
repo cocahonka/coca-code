@@ -1,0 +1,10 @@
+name: coca_code
+description: A sample command-line application.
+version: 1.0.0
+
+environment:
+  sdk: ^3.2.6
+
+dev_dependencies:
+  test: ^1.25.5
+  very_good_analysis: ^5.1.0
