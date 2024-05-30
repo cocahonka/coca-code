@@ -1,13 +1,17 @@
+import 'dart:io';
+
 import 'package:process_run/process_run.dart';
 import 'package:test/test.dart';
 
 void main() {
   test('Проверка ввода и вывода', () async {
-    final shell = Shell();
+    final inputData = File('test/input.txt').openRead();
 
-    final result = await shell.run('''
-      dart run < test/input.txt
-    ''');
+    final result = await runExecutableArguments(
+      'dart',
+      ['run'],
+      stdin: inputData,
+    );
 
     expect(
       result.outText,
