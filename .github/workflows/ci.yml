@@ -3,10 +3,10 @@ name: Dart CI
 on:
     push:
         branches:
-            - main
+            - variables-homework
     pull_request:
         branches:
-            - main
+            - variables-homework
 
 jobs:
     build:
