@@ -23,8 +23,8 @@ jobs:
             - name: Install dependencies
               run: dart pub get
 
-            - name: Run tests
-              run: dart test
-
             - name: Run analyze
               run: dart analyze
+
+            - name: Run tests
+              run: dart test
