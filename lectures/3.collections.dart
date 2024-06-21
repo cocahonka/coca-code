@@ -280,6 +280,7 @@ void collectionsFlow() {
 void random() {
   // Генерация рандомных значений
   final generator = Random();
+
   generator.nextInt(10); // 0 - 9
   generator.nextDouble(); // 0.0 - 1.0
   generator.nextBool(); // true/false
@@ -319,3 +320,16 @@ void main() {
 // Есть список из 5 чисел
 // На основе этого списка создать мапу где ключом будет число, а значением строка
 // В строке должно быть написано "Число: $key, Квадрат числа: ${key * key}"
+
+/*
+void main() {
+  for (final action in [first, second, third, fouth]) {
+    action();
+  }
+}
+
+void first() {}
+void second() {}
+void third() {}
+void fouth() {}
+*/
