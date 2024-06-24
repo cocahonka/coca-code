@@ -47,7 +47,7 @@ void anonymousFunctions() {
 
   sumFunction = (int a, int b) => a + b;
 
-  // sumFunction = (int a, int b, int c) => a + b + c; //! Ошибка - несовпадение типов перемменных
+  //sumFunction = (int a, int b, int c) => a + b + c; //! Ошибка - несовпадение типов перемменных
 
   print(sumFunction(1, 2));
 
@@ -66,7 +66,7 @@ void anonymousFunctions() {
   }
 
   final add5 = adder(5);
-  print(add5(11));
+  print(add5(11)); // 16
 
   List<int> filter({
     required bool Function(int) predicate,
@@ -83,7 +83,7 @@ void anonymousFunctions() {
     predicate: (int number) => number.isEven,
     list: [for (var i = 0; i < 10; ++i) i],
   );
-  print(evenNumbers);
+  print(evenNumbers); // [0, 2, 4, 6, 8]
 
   //; 5. Полная польза typedefs
   //? Так как анонимные функции не имеют имени, то их сложно использовать в качестве типов
@@ -106,7 +106,8 @@ void anonymousFunctions() {
   }) {
     // 1. Использовать findOrNull
     // 2. Использовать IntGetter (допустим мы хотим что то допом посчитать)
-    throw UnimplementedError();
+    final result = findOrNull(predicate: predicate, list: list);
+    return result ?? orElse();
   }
 }
 
@@ -141,6 +142,7 @@ void closures() {
   print(counter1()); // 1
   print(counter1()); // 2
   print(counter1()); // 3
+  final counter2 = counter();
 
   // Пример с фабрикой микроволновок
   MicrovaweFactory microvaweFactory(String brand) {
@@ -156,7 +158,7 @@ void closures() {
       modelNumber++;
 
       return (int timer, [String? dish]) {
-        final work = dish == null ? 'работает' : 'готовит $dish';
+        final work = (dish == null) ? 'работает' : 'готовит $dish';
         print('Микроволновка $modelName $work $timer секунд');
       };
     };
@@ -168,17 +170,17 @@ void closures() {
   final xiaomiMicrovawe = xiaomiFactory(800);
   final samsungMicrovawe = samsungFactory(1000);
 
-  xiaomiMicrovawe(30, 'Картошку');
-  xiaomiMicrovawe(60, 'Курицу');
-  xiaomiMicrovawe(10);
+  xiaomiMicrovawe(30, 'Картошку'); // 1
+  xiaomiMicrovawe(60, 'Курицу'); // 1
+  xiaomiMicrovawe(10); // 1
 
-  samsungMicrovawe(30, 'Картошку');
-  samsungMicrovawe(20);
+  samsungMicrovawe(30, 'Картошку'); // 1
+  samsungMicrovawe(20); // 1
 
   final newXiaomiMicrovawe = xiaomiFactory(1200);
-  newXiaomiMicrovawe(30, 'Картошку');
-  xiaomiMicrovawe(30, 'Картошку');
-  samsungMicrovawe(30, 'Картошку');
+  newXiaomiMicrovawe(30, 'Картошку'); // 2
+  xiaomiMicrovawe(30, 'Картошку'); // 1
+  samsungMicrovawe(30, 'Картошку'); // 1
 
   //; Возможно вам будет не понятно где такое использовать
   //; Но на самом деле вы используете это постоянно и не замечаете
@@ -230,6 +232,7 @@ void builtinAnonymousFunctions() {
   //? 2. reduce обязан вернуть тип элемента коллекции, а fold может вернуть любой тип
   //? 3. reduce не может быть вызван на пустой коллекции
   final sum = list.reduce((prev, next) => prev + next);
+  final sumByFold = list.fold(0, (sum, element) => sum + element);
   final multiply = list.skip(1).take(5).reduce((prev, next) => prev * next);
 
   final barCodedSummaryLength = barCodedList.fold(
@@ -242,11 +245,11 @@ void builtinAnonymousFunctions() {
   onlyPrimeNumbers.removeWhere((element) => !isPrime(element));
 
   final descendingList = [...list];
-  // descendingList.sort(); // Сортирует по возрастанию
+  //descendingList.sort(); // Сортирует по возрастанию
   descendingList.sort((a, b) => b.compareTo(a));
 
   //? forEach - итератор
-  final students = ['Habuba', 'Marcus', 'Ivan', 'Paul', 'BoldMan (Dota2)'];
+  final students = ['Habuba', 'Marcus', 'Ivan', 'Paul', 'BoldMan (Dota2 ubeite menya katanoi)'];
   students.forEach(print);
 
   final namedResults = {
@@ -263,7 +266,7 @@ void builtinAnonymousFunctions() {
     'descendingList': descendingList,
   };
 
-  namedResults.forEach((name, output) => print('$name: $output'));
+  namedResults.forEach((key, value) => print('$key: $value'));
 
   //? И множество других...
   // Например для карт
@@ -291,7 +294,7 @@ void cascadeOperator() {
 
   //* Пример продвинутого использования
   // Задача (заранее неизвестен порядок чисел в массиве):
-  // 1. Отфильтровать значения которые меньше или больше 50
+  // 1. Отфильтровать значения которые меньше или равны 50
   // 2. Убрать все нечетные элементы
   // 3. Отсортировать по убыванию
   // 4. Возвести в квадрат
@@ -310,6 +313,7 @@ void cascadeOperator() {
     ..map((element) => element * element);
 
   print(advancedListFalse);
+  print(advancedListTrue);
 
   //; Используйте каскадные операторы в следующих случаях
   //; 1. Вам не нужен результат метода
@@ -445,30 +449,30 @@ bool isPrime(int number) {
 //; 2 (1 задача)
 // Задача на замыкание (используйте typedef)
 // Фукнция ничего не принимает
-// Функция возвращает функцию X (сами подберите подходящее имя)
-// Фукнция X принимает строку и возвращает строку
+// Функция возвращает функцию X (сами подберите подходящее имя для typedef)
+// Фукнция X принимает строку (name) и возвращает строку
 //
 // Должна замыкаться переменная numBuildings
 // При каждом вызове функции X из main должно увеличиваться значение numBuildings на 1
 // Функция X должна печатать в консоль что было добавлено новое здание
-// Далее функция X должна возвращать строку с привественым сообщением и количество зданий
+// Далее функция X должна возвращать строку с привественым сообщением $name и количество зданий.
 // Показать что будет если создать две фукнции X
 //
 // Пример (измените вывод)
-// funcX = func()
-// a = funcX()
-// print(a)
-// b = funcX()
-// c = funcX()
+// funcX = closureFunc()
+// a = funcX('Иван')
+// b = funcX('Марк')
 // print(a)
 // print(b)
-// Вывод следующий
+// print(funcX('Хабиб'))
+// print(b)
+// ===Вывод следующий===
 // Добавлен дом
-// Привет Мэр, у вас 1 здание
 // Добавлен дом
+// Привет Иван, у вас 1 дом
+// Привет Марк, у вас 2 дом
 // Добавлен дом
-// Привет Мэр, у вас 3 здания
-// Привет Мэр, у вас 3 здания
+// Привет Хабиб, у вас 3 дом
 
 //; 3 (3 задачи)
 // Задачи на STD
@@ -488,7 +492,8 @@ bool isPrime(int number) {
 //! Не использовать встроенный skipWhile и takeWhile!
 //! Сделать два решения с yield и yield*
 
-// Задача на рекурсивный sync* (1 задача)
+//; 5 (1 задача)
+// Задача на рекурсивный sync*
 // Доделайте этот код чтобы получился треугольник паскаля
 // P.s данный подход не оптимален, но он хорошо показывает как работает sync*
 // P.s.s вызывайте в мейне generatePascalTriangle
