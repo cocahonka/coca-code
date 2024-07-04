@@ -1,5 +1,7 @@
-// ignore_for_file: omit_local_variable_types, prefer_final_locals, unused_local_variable, cascade_invocations, prefer_initializing_formals, unnecessary_this
+// ignore_for_file: omit_local_variable_types, prefer_final_locals, unused_local_variable, cascade_invocations, prefer_initializing_formals, unnecessary_this, sort_constructors_first
 
+import 'dart:collection';
+import 'dart:io';
 import 'dart:math';
 
 void introduction() {
@@ -44,7 +46,7 @@ void introduction() {
 
   //? Где это применяется?
   //* Везде...
-  //* 1. Пораждение
+  //* 1. Порождение
   //* 2. Структура
   //* 3. Поведение
 
@@ -81,7 +83,7 @@ void terms() {
 
 void encapsulation() {
   //? Инкапсуляция
-  //!!! Инкапсуляция – это объединение данных и функций в одном классе, с ВОЗМОЖНОСТЬЮ скрыть детали реализации.
+  //!!! Инкапсуляция – это объединение полей и функций в одном классе, с ВОЗМОЖНОСТЬЮ скрыть детали реализации.
 
   //* Инкапсуляция позволяет создавать объекты, которые могут быть использованы в других частях программы,
   //* не зная, как именно они работают внутри. Это позволяет упростить код, сделать его более понятным и
@@ -127,7 +129,6 @@ void addMethods() {
   //* Синтаксис - как у обычных функций
 
   final objectWithMethods = ClassWithMethods();
-
   objectWithMethods.greeting();
   print(objectWithMethods.calculateSum(5, 10));
 }
@@ -167,7 +168,7 @@ class ClassWithFields {
 void combinedClass() {
   //? Комбинированный класс
   //* Класс может содержать и методы, и поля
-  //* Синтаксис - объявляем поля, методы и конструкторы внутри класса
+  //* Синтаксис - объявляем поля, методы внутри класса
 
   final combinedObject = CombinedClass();
   combinedObject.greeting();
@@ -218,6 +219,9 @@ void constructors() {
   //* Class.named(args...)
   //...
 
+  final p1 = Point(2, 3);
+  final p2 = Point.zero();
+
   final object1 = ClassWithConstructor('Ivan', 19);
   final object2 = ClassWithConstructor.short('Paul', 20);
   final object3 = ClassWithConstructor.fullDataNamed(name: 'Marcus', age: 21);
@@ -228,8 +232,32 @@ void constructors() {
   //* Деструкторы в Dart отсутствуют, так как у нас присутсвует сборщик мусора
 }
 
+class Point {
+  final int x;
+  final int y;
+
+  Point(int x, int y)
+      : x = x,
+        y = y;
+
+  Point.zero()
+      : x = 0,
+        y = 0;
+}
+
+class DiceRoll {
+  DiceRoll({required this.edges, required this.count}) : maxPoints = edges * count;
+
+  final int edges;
+  final int count;
+  final int maxPoints;
+}
+
 class ClassWithConstructor {
   // ClassWithConstructor(); // Это то что генерируется всегда, но мы можем это изменить
+
+  final String name;
+  final int age;
 
   //* Теперь дефолтный конструктор принимает два параметра
   //* И теперь нельзя создать объект просто через ClassWithConstructor();
@@ -265,9 +293,9 @@ class ClassWithConstructor {
       : name = 'Ivan',
         age = 19;
 
-  ClassWithConstructor.fullDataWithAnotherVariableNames({String surname = 'Ivanov', int years = 19})
+  ClassWithConstructor.fullDataWithAnotherVariableNames({String surname = 'Ivanov'})
       : name = surname,
-        age = years;
+        age = surname.length;
 
   //* Сокращенные конструкторы (рекомендованные к использованию)
   ClassWithConstructor.short(this.name, this.age);
@@ -275,9 +303,6 @@ class ClassWithConstructor {
   ClassWithConstructor.namedShort({required this.name, required this.age});
 
   ClassWithConstructor.combined(String someName, {required this.age}) : name = someName;
-
-  final String name;
-  final int age;
 }
 
 void halfOfEncapsulation() {
@@ -291,36 +316,46 @@ void halfOfEncapsulation() {
   human.showInfo();
   goblin.showInfo();
   shrek.showInfo();
+
+  shrek.attack(human);
+  human.showInfo();
 }
 
 class Monster {
   Monster({
     required this.name,
-    required this.health,
+    required int health,
     required this.damage,
-  });
+  }) : _health = health;
 
   Monster.human({
-    required this.health,
+    required int health,
     required this.damage,
-  }) : name = 'Human';
+  })  : _health = health,
+        name = 'Human';
 
   //* Вызов конструктора из конструктора
-  Monster.goblin() : this(name: 'Goblin', health: 120, damage: 5);
+  //Monster.goblin() : this(name: 'Goblin', health: 120, damage: 5);
+  Monster.goblin()
+      : name = 'Goblin',
+        _health = 120,
+        damage = 5;
+
   Monster.orc() : this(name: 'Orc', health: 200, damage: 10);
+
   Monster.godHuman() : this.human(health: 999999, damage: 999999);
   Monster.mutation(String name) : this(name: name, health: 999999, damage: 999999);
 
   final String name;
-  final int health;
+  int _health;
   final int damage;
 
   void attack(Monster enemy) {
-    // What to do???
+    enemy._health -= damage;
   }
 
   void showInfo() {
-    print('Name: $name, Health: $health, Damage: $damage');
+    print('Name: $name, Health: $_health, Damage: $damage');
   }
 }
 
@@ -344,7 +379,7 @@ void commandmentsOfOOP() {
   //* Как имея такие возможности не написать плохого кода?
   //* Для этого существуют правила написания хорошего кода
   //* Их очень и очень много
-  //* Но есть основное - акроним SOLID
+  //* Но есть основное - акроним S.O.L.I.D
 
   //? Благодаря Dart и его строгой типизации принцип L автоматически выполняется (его невозможно нарушить)
   //* Остается SOID
@@ -406,8 +441,8 @@ void main() {
 //* 3. Больница
 //* 4. Спортивный клуб
 //? Из прикладного уровня:
-//* 1. Wordle
-//* 2. Мобильное приложение
+//* 1. Wordle (Input, AttempPresentation, RoundResult, Round)
+//* 2. Мобильное приложение (Widget, Screen, Buttons, User, Settings, Store, Navigator)
 //* 3.
 
 // Задание: проектирование классов + проверка синтаксиса
