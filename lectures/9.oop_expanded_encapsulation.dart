@@ -1,4 +1,4 @@
-// ignore_for_file: cascade_invocations, unused_field, prefer_final_fields, prefer_const_declarations, unused_local_variable, prefer_const_constructors, unnecessary_type_check, omit_local_variable_types
+// ignore_for_file: cascade_invocations, unused_field, prefer_final_fields, prefer_const_declarations, unused_local_variable, prefer_const_constructors, unnecessary_type_check, omit_local_variable_types, sort_constructors_first
 
 // План
 //? Методы
@@ -317,11 +317,26 @@ void fabricConstructor() {
   // или
   //* factory ClassName() { return ClassName(); }
 
+  //? Отличия от обычного конструктора
+  //* 1. Фабричный конструктор можно расматривать как метод, и этот метод имеет аргументы и тело (нету списка иницилизации)
+  //* 2. Цель фабричного конструктора - вернуть объект, а НЕ инициализировать поля
+  //* 3. Фабричный конструктор не имеет доступа к this
+
   //? Зачем
   //* Кеширование объектов
   //* Преобразование объектов
 
   // Пример
+  final cached1 = SomethingCached.firstCached('Marcus');
+  final cached2 = SomethingCached.firstCached('Habuba');
+  final cached3 = SomethingCached.secondCached('Marcus');
+  final cached4 = SomethingCached.secondCached('Ivan');
+  print('chached1 Marcus : ${cached1.hashCode}');
+  print('chached2 Habuba : ${cached2.hashCode}');
+  print('chached3 Marcus : ${cached3.hashCode}');
+  print('chached4 Ivanus : ${cached4.hashCode}\n');
+
+  // Пример 2
   final logger1 = Logger('UI');
   final logger2 = Logger('UI');
   print(logger1 == logger2);
@@ -331,6 +346,7 @@ void fabricConstructor() {
   print(logger3 == logger2);
   print(logger4 == logger3);
 
+  // Пример 3
   final marcusStudent = Student()
     ..name = 'Marcus'
     ..age = 20
@@ -342,6 +358,39 @@ void fabricConstructor() {
   print(user.name);
   print(user.email);
 }
+
+//? Кэширование объектов
+//* Представим задачу:
+//* Нам нужно при создании очередного объекта вернуть старый объект, если такой уже существует
+//* Как различать новые и страрые объекты? - по полям
+//* Значит если какие-либо выбранные нами поля уже существуют в кэше, то мы возвращаем старый объект
+//* В данном случае будем ориетироваться на поле String value
+class SomethingCached {
+  final String name;
+
+  SomethingCached._internal(this.name);
+
+  static final Map<String, SomethingCached> _cache = {};
+
+  static SomethingCached firstCached(String value) {
+    if (_cache.containsKey(value)) {
+      final oldObject = _cache[value]!;
+      return oldObject;
+    } else {
+      final newObject = SomethingCached._internal(value);
+      _cache[value] = newObject;
+      return newObject;
+    }
+  }
+
+  factory SomethingCached.secondCached(String value) {
+    return _cache.putIfAbsent(value, () => SomethingCached._internal(value));
+  }
+}
+//? В чем отличие от static?
+//* Статические методы и правда могут быть использованы как factory конструкторы
+//* Но поддержка остальный принципов ООП страдает
+//* (мы не можем переопределить статический метод в дочернем классе, не сможем использовать дженерики и т.д.)
 
 class Logger {
   factory Logger(String name) {
@@ -435,6 +484,7 @@ void main() {
     'lateKeyword': lateKeyword,
     'constConstructors': constConstructors,
     'fabricConstructor': fabricConstructor,
+    'asAndIs': asAndIs,
   };
 
   for (final MapEntry(key: label, value: action) in labels.entries) {
@@ -483,6 +533,7 @@ void main() {
 //* 1. Два конструктора
 //* 2. Методы push pop popOrNull
 //* 3. Геттеры front frontOrNull isEmpty isNotEmpty entries
+//* 4. entries помимо того что является геттером еще должен быть sync*
 
 //? 5. Реализуйте класс «Кошелек»
 //* В класс могут добавляться экземпляры дата-класса Wallet различного номинала.
