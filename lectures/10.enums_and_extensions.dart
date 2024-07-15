@@ -33,6 +33,7 @@ void enums() {
 
   // Базовые примеры
   const someDirection = Direction.east;
+
   print(someDirection);
   print(someDirection.name);
   print(someDirection.index);
@@ -73,7 +74,7 @@ void enums() {
     return false;
   }
 
-  print("Validate 'jigger' by inputWord rule : ${validateWordle('jiger', WordleValidator.inputWord)}");
+  print("Validate 'jiger' by inputWord rule : ${validateWordle('jiger', WordleValidator.inputWord)}");
   print("Validate 'migger' by inputWord rule : ${validateWordle('migger', WordleValidator.inputWord)}");
   print("Validate 'yes' by yesOrNo rule : ${validateWordle('yes', WordleValidator.yesOrNo)}");
   print("Validate 'n' by yesOrNo rule : ${validateWordle('n', WordleValidator.yesOrNo)}");
@@ -118,9 +119,10 @@ void enhancedEnums() {
   //* }
 
   // Пример
-  // const vehicle = Vehicle.bus();
+
+  //const vehicle = Vehicle.bus;
   final vehicle = Vehicle.byTires(6);
-  print('vehice: $vehicle');
+  print('vehile: $vehicle');
   print('vehile.name: ${vehicle.name}');
   print('vehile.index: ${vehicle.index}');
   print('vehile.tires: ${vehicle.tires}');
@@ -210,10 +212,13 @@ void finiteStateMachine() {
   // Statement
   switch (direction) {
     case Direction.north:
+      print('north');
     case Direction.east:
     case Direction.south:
       // north и east "проваливаются в south"
-      print('north, east, south');
+      print('east, south');
+      print('east, south');
+      print('east, south');
     // ignore: no_default_cases
     default:
       // все другие необработанные значения (west)
@@ -356,7 +361,7 @@ void extensions() {
   //* 1. Добавим геттер flatten
   //* 2. Добавим метод unzip
   //? Enum
-  //* 1. Добавим метод getValueByName и getNameByValueOrNull
+  //* 1. Добавим метод getValueByName и getValueByNameOrNull
 
   // Пример String
   print('String extension');
@@ -370,7 +375,7 @@ void extensions() {
   print('\n');
 
   // Пример List<int>, List<double>
-  print('List<int>, List<double>, List<num> extension');
+  print('List<int>, List<double> extension');
   final numbers = [1, 2, 3, 4, 5];
   print(numbers.average);
   final doubles = [1.0, 2.0, 3.0, 4.0, 5.0];
@@ -449,6 +454,7 @@ extension ListDoubleExtension on List<double> {
 extension ListObjectExtension on List<Object> {
   List<List<Object>> zip(List<Object> other) {
     assert(other.length >= length);
+
     final result = <List<Object>>[];
     for (var i = 0; i < length; i++) {
       result.add([this[i], other[i]]);
@@ -474,6 +480,7 @@ extension ListListObjectExtensions on List<List<Object>> {
         (<Object>[], <Object>[]),
         (record, element) {
           assert(element.length == 2);
+
           record.$1.add(element.first);
           record.$2.add(element.last);
           return record;
@@ -548,7 +555,13 @@ void main() {
 //* Например числа (+1000 и -1000) и другие больше 12 или отрицательные не должны вызывать проблем
 //; Для сложение месяца с месяцем используйте конечный автомат, а не сложение номеров месяцев.
 
-//? 3. Создайте расширение для коллекций чисел (int и double)
+//? 3. Создайте расширение для int
+//* Метод или геттер isPrime (простое ли число)
+
+//? 3.1 Создайте расширение для String
+//* Геттер reversed
+
+//? 4. Создайте расширение для коллекций чисел (int и double)
 //* 1. Нужны методы min, max, sum, groupBy
 //* - groupBy должен принимать int - число по которому будет произведена группировка
 //* - (на сколько групп будет разбит изначальный лист)
@@ -558,9 +571,6 @@ void main() {
 //* 2. Нужны геттеры isUpscale, isDownscale (возрастающая/убывающая ли последовательность)
 //* 3. Ответить на вопрос (письменно, не кодом) как было бы лучше сделать isUpscale, isDownscale?
 //* - Оставить их в виде геттеров или лучше перевести в форму методов?
-
-//? 4. Создайте расширение для int
-//* Метод или геттер isPrime (простое ли число)
 
 //? 5. Реализуйте свой класс Matrix4x4
 //* Класс должен инкапсулировать приватный двумерный лист
