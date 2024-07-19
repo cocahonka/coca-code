@@ -553,7 +553,7 @@ void main() {
 //* - Month.january.plusMonth(Month.february) == Month.march
 //; Для чисел предусмотрите переполнение:
 //* Например числа (+1000 и -1000) и другие больше 12 или отрицательные не должны вызывать проблем
-//; Для сложение месяца с месяцем используйте конечный автомат, а не сложение номеров месяцев.
+//; Для сложение месяца с месяцем НЕ используйте конечный автомат, используйте функцию для сложения номеров месяцев.
 
 //? 3. Создайте расширение для int
 //* Метод или геттер isPrime (простое ли число)
@@ -591,3 +591,73 @@ void main() {
 //* Описание (интерпритируйте на свой вкус, это задание на ваше воображение)
 //* Кофемашина может готовить 3 вида кофе: капучино, латте и эспрессо.
 //* Кофемашина также может находиться в режиме ожидания и в режиме выбора напитка
+
+//? 7. Реализуйте перечисление для денежных валют
+//* Реализуйте enum для денежных валют (например, USD, EUR, GBP).
+//* Каждая валюта должна содержать информацию о её символе, курсе по отношению к рублю.
+//* Реализуйте метод для конвертации суммы из одной валюты в другую.
+
+//? 8. Создайте расширение для списка строк
+//* Расширение должно добавить метод groupByFirstLetter, который группирует строки по первой букве.
+//* Метод возращает Map<String, List<String>>
+//* Пример работы:
+//* Код для теста:
+// ['hello', 'world', 'hey', 'guys'].groupByFirstLetter().forEach((key, value) => print('$key: $value'));
+//* Вывод программы:
+/*
+H: [hello, hey]
+W: [world]
+G: [guys]
+*/
+
+//? 9. Создайте расширение для списка объектов
+//* Расширение должно добавить метод toMapByField, который преобразует список объектов в карту,
+//* где ключами будут значения указанного поля.
+//* Пример работы:
+//* Код для теста:
+/*
+class Person {
+  Person(this.name, this.age);
+
+  final String name;
+  final int age;
+}
+
+void mapPrint(Object key, Object value) => print('$key: $value');
+
+void main() {
+  [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14]
+      .toMapByField((obj) => (obj as int).toRadixString(2))
+      .forEach(mapPrint);
+
+  [Person('Ivan', 19), Person('Marcus', 19), Person('Paul', 20)]
+      .toMapByField((obj) => (obj as Person).name)
+      .forEach(mapPrint);
+}
+*/
+//* Вывод программы:
+/*
+1: 1
+10: 2
+11: 3
+100: 4
+101: 5
+110: 6
+111: 7
+1000: 8
+1001: 9
+1010: 10
+1011: 11
+1100: 12
+1101: 13
+1110: 14
+Ivan: Instance of 'Person'
+Marcus: Instance of 'Person'
+Paul: Instance of 'Person'
+*/
+
+extension ListToMapByFieldExtension on List<Object> {
+  Map<Object, Object> toMapByField(Object Function(Object) keySelector) {
+    return {for (final element in this) keySelector(element): element};
+  }
+}
