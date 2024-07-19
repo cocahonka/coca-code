@@ -655,9 +655,3 @@ Ivan: Instance of 'Person'
 Marcus: Instance of 'Person'
 Paul: Instance of 'Person'
 */
-
-extension ListToMapByFieldExtension on List<Object> {
-  Map<Object, Object> toMapByField(Object Function(Object) keySelector) {
-    return {for (final element in this) keySelector(element): element};
-  }
-}
