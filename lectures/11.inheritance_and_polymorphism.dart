@@ -1,4 +1,4 @@
-// ignore_for_file: cascade_invocations, prefer_const_constructors, avoid_equals_and_hash_code_on_mutable_classes
+// ignore_for_file: cascade_invocations, prefer_const_constructors, avoid_equals_and_hash_code_on_mutable_classes, no_runtimetype_tostring
 
 import 'dart:collection';
 import 'dart:io';
@@ -491,4 +491,178 @@ void main() {
 //* Вывести победителя (должен остаться только один элемент в листе)
 //; Переопределите toString
 
-//? 2. Создайте класс Equatable...
+//? 2. Создайте класс Equatable
+//* Класс должен иметь:
+//* 1. Публичный геттер props List<Object?> по дефолту возвращающий пустой лист
+//* 2. Переопределенные методы hashCode и operator == (на основе props)
+//* 3. Переопределенный метод toString (на основе props)
+//
+//* Классы, которые наследуются от Equatable должны:
+//* 1. Иметь константный конструктор
+//* 2. Переопределять метод props (props - это список всех полей объекта)
+//* После этого класс и его объекты должны быть способны к сравнению и выводу
+//* Причем количество полей и их типы неважны и могут быть абсолютно любыми
+//
+//* Пример использования (проверяйте работу на этом примере):
+/*
+class EqualityTest extends Equatable {
+  EqualityTest({
+    required this.a,
+    required this.b,
+    required this.c,
+    required this.d,
+    required this.e,
+    required this.f,
+    required this.g,
+  });
+
+  final String a;
+  final int b;
+  final List<int> c;
+  final List<Object?> d;
+  final List<List<Set<int>>> e;
+  final Map<int, List<Set<List<Map<String, int>>>>> f;
+  final Map<int, List<Set<List<Map<List<Object?>, int>>>>> g;
+
+  EqualityTest copyWith({
+    String? a,
+    int? b,
+    List<int>? c,
+    List<Object?>? d,
+    List<List<Set<int>>>? e,
+    Map<int, List<Set<List<Map<String, int>>>>>? f,
+    Map<int, List<Set<List<Map<List<Object?>, int>>>>>? g,
+  }) {
+    return EqualityTest(
+      a: a ?? this.a,
+      b: b ?? this.b,
+      c: c ?? this.c,
+      d: d ?? this.d,
+      e: e ?? this.e,
+      f: f ?? this.f,
+      g: g ?? this.g,
+    );
+  }
+
+  @override
+  List<Object?> get props => [a, b, c, d, e, f, g];
+}
+
+void main() {
+  final test = EqualityTest(
+    a: 'a',
+    b: 1,
+    c: [
+      1,
+      2,
+      3,
+    ],
+    d: [
+      1,
+      2.5,
+      'd',
+    ],
+    e: [
+      [
+        {1},
+        {2},
+        {3},
+      ],
+      [
+        {4},
+        {5},
+        {6},
+      ]
+    ],
+    f: {
+      1: [
+        {
+          [
+            {'1': 1},
+            {'2': 2},
+          ]
+        },
+        {
+          [
+            {'3': 3},
+            {'4': 4},
+          ]
+        }
+      ],
+      2: [
+        {
+          [
+            {'5': 5},
+            {'6': 6},
+          ]
+        },
+        {
+          [
+            {'7': 7},
+            {'8': 8},
+          ]
+        }
+      ],
+    },
+    g: {
+      1: [
+        {
+          [
+            {
+              [
+                '1',
+                6,
+                4.5,
+                [5],
+              ]: 1,
+            },
+            {
+              [
+                '1',
+                6,
+                4.5,
+                [8, 10, null],
+              ]: 2,
+            },
+          ]
+        },
+        {
+          [
+            {
+              ['3']: 3,
+            },
+            {
+              ['4']: 4,
+            }
+          ]
+        },
+      ],
+      2: [
+        {
+          [
+            {
+              ['5']: 5,
+            },
+            {
+              ['6']: 6,
+            },
+          ]
+        },
+        {
+          [
+            {
+              ['7']: 7,
+            },
+            {
+              ['8']: 8,
+            }
+          ]
+        }
+      ],
+    },
+  );
+  print(test);
+  print(test == test.copyWith()); // true
+  print(test == test.copyWith(a: 'Z')); // false
+}
+*/
