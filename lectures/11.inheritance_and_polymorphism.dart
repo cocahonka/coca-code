@@ -473,8 +473,24 @@ void main() {
 }
 
 // Домашнее задание
+//? 1. Система уведомлений
+//* Реализовать систему уведомлений, которая поддерживает разные типы уведомлений (например, Email, SMS, Push).
+//* Каждое уведомление должно отправляться по-своему и содержать различную информацию.
+//* Отправление уведомления происходит с помощью метода со следующей сигнатурой: void send(String recipient, String message)
+//* Создать класс NotificationManager, который будет хранить, позволять добавлять и отправлять уведомления.
+//* Для отправки уведомлений у NotificationManager должен быть метод void sendAll(String recipient, String message)
+//* Пример использования:
+/*
+ final manager = NotificationManager();
 
-//? 1. Создайте следующую иерархию классов:
+  manager.addNotification(EmailNotification(header: 'Hello from Dart'));
+  manager.addNotification(SMSNotification(maximumTimeout: 10, cost: 12));
+  manager.addNotification(PushNotification(prefix: '[Dart is awesome]'));
+
+  manager.sendAll('user@example.com', 'Hello, this is a test notification!');
+*/
+
+//? 2. Создайте следующую иерархию классов:
 //* 1. Fightable - имеет поля diceCount и diceSides, методы attack и getDamage, геттер damageRoll
 //* 2. Creature - имеет поля name, health, геттер isAlive
 //* 3. Monster - имеет поле description
@@ -491,7 +507,7 @@ void main() {
 //* Вывести победителя (должен остаться только один элемент в листе)
 //; Переопределите toString
 
-//? 2. Реализуйте паттерн "Состояние" - State
+//? 3. Реализуйте паттерн "Состояние" - State
 //* Паттерн нужно продемонстрировать на примере аудиоплеера
 //* Суть аудиоплеера такова:
 //* 1. Плеер может находиться в трех состояниях: заблокирован, готов к воспроизведению, воспроизведение
@@ -526,7 +542,8 @@ class Locker {
 }
 */
 
-//? 3. Создайте класс Equatable
+
+//? 4. Создайте класс Equatable
 //* Класс должен иметь:
 //* 1. Публичный геттер props List<Object?> по дефолту возвращающий пустой лист
 //* 2. Переопределенные методы hashCode и operator == (на основе props)
