@@ -504,9 +504,10 @@ void main() {
 //* Причем количество полей и их типы неважны и могут быть абсолютно любыми
 //
 //* Пример использования (проверяйте работу на этом примере):
+//; P.S Конструктор должен быть константным, НО объект создавайте не константным
 /*
 class EqualityTest extends Equatable {
-  EqualityTest({
+  const EqualityTest({
     required this.a,
     required this.b,
     required this.c,
