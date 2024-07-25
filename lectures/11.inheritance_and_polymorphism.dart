@@ -545,7 +545,55 @@ class Locker {
 */
 
 
-//? 4. Создайте класс Equatable
+//? 4. Виджеты
+//* Вам нужно реализовать простую систему виджетов, которая позволяет строить деревья виджетов и выводить их на экран.
+//*     1. Реализуйте три вида виджетов: Text, Picture и Column.
+//*     2. У каждого виджета должен быть метод build(), а также опциональное поле child, которое МОЖЕТ содержать другой виджет.
+//*     3. Каждый метод build() в КОНЦЕ должен вызывать метод build() дочернего виджета (child), если он существует,
+//*        - и возвращать его результат (результат build()).
+//*     P.S - Сигнатура build: Widget? build()
+//* Описание виджетов:
+//*     1. Text: выводит текст.
+//*     2. Picture: выводит ссылку на картинку.
+//*     3. Column: выводит "Column" и вызывает метод build() для каждого виджета, который содержится в его списке contents.
+//* Учтите, что виджеты принимают не только дочерние виджеты, но и другие параметры.
+//* Например виджет текст принимает String data
+// Пример кода:
+/*
+void main() {
+  final longWidgetTree = Column(
+    contents: [
+      Text(data: 'Hello'),
+      Column(
+        contents: [Text(data: 'World'), Picture(url: 'https://example.com/image.png')],
+        child: Column(
+          contents: [Text(data: 'Goodbye')],
+          child: Picture(
+            url: 'https://example.com/another-image.png',
+            child: Text(data: 'Word'),
+          ),
+        ),
+      ),
+    ],
+  );
+
+  longWidgetTree.build();
+}
+*/
+// Вывод
+/*
+Column
+Text: Hello
+Column
+Text: World
+Picture: https://example.com/image.png
+Column
+Text: Goodbye
+Picture: https://example.com/another-image.png
+Text: Word
+*/
+
+//? 5. Создайте класс Equatable
 //* Класс должен иметь:
 //* 1. Публичный геттер props List<Object?> по дефолту возвращающий пустой лист
 //* 2. Переопределенные методы hashCode и operator == (на основе props)
