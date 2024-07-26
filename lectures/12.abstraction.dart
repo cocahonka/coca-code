@@ -186,6 +186,7 @@ void abstract$() {
   //* Ссылочные фабричные конструкторы позволяют перенаправить вызов конструктора на другой конструктор
   //* (даже другого типа, но с условием наследования/реализации интерфейса)
   //? Пример
+
   final myMap = MyMap(); // На самом деле создали объект класса LinkedHashMyMap
   print(myMap is LinkedHashMyMap); // true
 
@@ -279,7 +280,7 @@ abstract class MyMap {
   factory MyMap() = LinkedHashMyMap;
   factory MyMap.tree(int value) = TreeHashedMyMap;
 
-  int get veryImportantValue;
+  abstract final int veryImportantValue;
   void addValue(int value);
 }
 
@@ -344,8 +345,7 @@ abstract base class User {
   void greet(User other);
 }
 
-//* Истинный обычный класс - не может инициализироваться, не может имплементироваться
-//* Только наследоваться
+//* Истинный обычный класс - может инициализироваться, не может имплементироваться
 base class Admin extends User {
   Admin(super.name);
 
@@ -426,12 +426,12 @@ void interface$() {
 
   // Примеры
 
-  // (Интерфейс)  https://github.com/hawkkiller/sizzle_starter/blob/main/lib/src/core/rest_client/src/rest_client.dart
-  // (Абстрактный класс) https://github.com/hawkkiller/sizzle_starter/blob/main/lib/src/core/rest_client/src/rest_client_base.dart
-  // (Реализация) https://github.com/hawkkiller/sizzle_starter/blob/main/lib/src/core/rest_client/src/http/rest_client_http.dart
+  // (Интерфейс - супер общие методы)  https://github.com/hawkkiller/sizzle_starter/blob/main/lib/src/core/rest_client/src/rest_client.dart
+  // (Абстрактный класс - общие методы с реализацией) https://github.com/hawkkiller/sizzle_starter/blob/main/lib/src/core/rest_client/src/rest_client_base.dart
+  // (Реализация (http, dio)) https://github.com/hawkkiller/sizzle_starter/blob/main/lib/src/core/rest_client/src/http/rest_client_http.dart
 
-  // (Интерфейс) https://gist.github.com/cocahonka/e52d48a0ed621153104953240edde19f
-  // (Реализация) https://gist.github.com/cocahonka/50b1a12f359710a054fb7612f281f5ce
+  // (Интерфейс) https://gist.github.com/cocahonka/50b1a12f359710a054fb7612f281f5ce
+  // (Реализация) https://gist.github.com/cocahonka/e52d48a0ed621153104953240edde19f
 
   // (Абстрактный класс -> Абстрактный класс -> 2 Реализации) https://gist.github.com/cocahonka/672986b5263bf246a9c036d4856bb2a3
   // Для апкаста используется ProcessHandler
@@ -568,13 +568,13 @@ void conclusion() {
   //* - Не может быть создан и унаследован, но может быть имплементирован.
   //* - Содержит ТОЛЬКО абстрактные методы и поля
 
-  //* 4. base class - базовый класс
+  //* 3. base class - базовый класс
   //* - Может быть создан, унаследован, но не имплементирован.
 
-  //* 3. final class - конечный класс
+  //* 4. final class - конечный класс
   //* - Не может быть унаследован и имплементирован, но может быть создан.
 
-  //* 4. abstract final class - неймпспейс(?) или решение проблемы с приватными абстрактными методами и полями
+  //* 5. abstract final class - неймпспейс(?) или решение проблемы с приватными абстрактными методами и полями
 
   //? Когда интерфейс, когда абстрактный класс?
   //* 1. Интерфейс - контракт, который гарантирует, что класс реализует все члены интерфейса.
@@ -593,6 +593,7 @@ abstract final class Constants {
   static const String appName = 'MyApp';
   static const String appVersion = '1.0.0';
   static const String appAuthor = 'cocahonka';
+  static const int favNumber = 42;
 }
 
 //; P.S.S Бонус с Comparable
