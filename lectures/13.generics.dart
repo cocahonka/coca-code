@@ -16,7 +16,7 @@ void generics() {
 
   //? Разбор преимуществ
   //* 1. Безопасность типов
-  final list = <int>[1, 2, 3];
+  final list = [1, 2, 3];
   // list.add('4'); //! Error: The argument type 'String' can't be assigned to the parameter type 'int'.
 
   //* 2. Повторное использование кода
@@ -107,7 +107,10 @@ void generics2() {
   zippedList34.printAll();
 
   final list5 = [1, 2, 3];
-  final list6 = list5.mapIndexed((e, i) => '$i: $e');
+  final list6 = list5.mapIndexed((i, e) => '$i: $e');
+
+  final list7 = ['some', 'list', 'of', 'strings'];
+  final list8 = list7.mapIndexed((i, e) => '$i: $e');
 
   //? Посмотрим код dart
   //* 1. List
@@ -169,9 +172,9 @@ extension ListExtensions<T> on List<T> {
 
   void printAll() => forEach(print);
 
-  Iterable<E> mapIndexed<E>(E Function(T e, int index) toElement) sync* {
+  Iterable<E> mapIndexed<E>(E Function(int index, T e) toElement) sync* {
     for (var i = 0; i < length; ++i) {
-      yield toElement(this[i], i);
+      yield toElement(i, this[i]);
     }
   }
 }
@@ -308,7 +311,7 @@ void generics4() {
   var identR = IdentifiableRepository(); //* 1. Extends сам справится с типом
 
   identR = userR;
-  // userR = identR; // Ошибка
+  //userR = identR; // Ошибка
 
   var a = <Object>[];
   var b = <int>[];
@@ -380,6 +383,8 @@ abstract base class Animal {
 }
 
 final class Mouse extends Animal {
+  final tail = 20;
+
   @override
   void chase(Animal x) {}
 }
@@ -419,6 +424,7 @@ void renderWidgets() {
   //* Тут мы можем гарантировать, что didUpdateWidget будет вызван с правильным типом!
 
   final widgets = <Widget>[StatefulWidget(), StatelessWidget()];
+
   for (final widget in widgets) {
     final copy = widget.copy();
     //- Some Dark Magic
@@ -428,7 +434,7 @@ void renderWidgets() {
 
 void operators() {
   //? Переопределение операторов
-  //* Большинство операторов - это методы экземпляра с специальными именами.
+  //* Большинство операторов - это методы объекта с специальными именами.
   //* Dart позволяет вам определять операторы с следующими именами:
   // <	>	<=	>=	==	~
   // -	+	/	~/	*	%
@@ -437,7 +443,7 @@ void operators() {
   //* Некоторые операторы отсутствуют, например, ++ -- != и др. это связано с тем,
   //* что поведение этих операторов встроенно в Dart, и мы не можем переопределить их
 
-  //* Из всего списка наиболее часто переопределяются операторы: == [] []= = - * / & ^
+  //* Из всего списка наиболее часто переопределяются операторы: == [] []= + - * / & ^
   //* Переопределение операторов позволяет вам определить собственное поведение для операторов,
   //* когда они используются с экземплярами вашего класса.
 
@@ -456,9 +462,9 @@ void operators() {
   // Пример 2
   //* Пример показывает не только возможность использовать оператор но и
   //* вред таких операторов, потому что они могут быть непонятными, лучше использовать обычные методы
-  final a = ConditionA();
-  final b = ConditionB();
-  final c = ConditionC();
+  final a = ConditionA(); // true
+  final b = ConditionB(); // false
+  final c = ConditionC(); // false (in operator true)
   print(a & b); // false
   print(a & c); // false
   print(c & a); // true
@@ -575,10 +581,26 @@ void conclusion() {
   //? Вопросы для проверки
   //* 1. Как можно улучшить LinearStructure (Stack, Queue)? (см. лекцию 12)
   //* 2. Как можно улучшить sum и average для разных типов? (см. лекцию 10)
+
+  final a = [1].sum;
+  final b = [2.4].sum;
+  final c = [1, 2.3].sum;
 }
 
 //; LinearStructure
 //; sum average
+
+extension NumIterableExtension<T extends num> on Iterable<T> {
+  double get average => isEmpty ? 0 : reduce((value, element) => (value + element) as T) / length;
+
+  T get sum {
+    num sum = 0;
+    for (final el in this) {
+      sum += el;
+    }
+    return sum as T;
+  }
+}
 
 void main() {
   final labels = {
