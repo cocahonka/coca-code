@@ -632,9 +632,15 @@ import 'dart:io';
 void main() {
   final cache = CacheTtl<String, double>();
   cache.set(('pi', 3.14, ttl: const Duration(milliseconds: 500)));
+  cache.set(('e', 2.17, ttl: const Duration(seconds: 10)));
+
   print(cache.get('pi')) // 3.14
+  print(cache.get('e')) // 2.17
+
   sleep(const Duration(seconds: 1));
+
   print(cache.get('pi')) // null
+  print(cache.get('e')) // 2.17
 }
 */
 
