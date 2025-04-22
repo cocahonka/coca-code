@@ -98,11 +98,7 @@ class Person {
 
 //* Наследование - мы даже не переопределяем greet и поля
 class Student extends Person {
-  Student({
-    required super.name,
-    required super.age,
-    required this.university,
-  });
+  Student({required super.name, required super.age, required this.university});
 
   final String university;
 
@@ -214,11 +210,8 @@ abstract class Fightable {
 
 //* Реализация абстрактного класса
 class FightableDamage extends Fightable {
-  FightableDamage(
-    this.diceCount,
-    this.diceSides,
-    int healthPoints,
-  ) : _healthPoints = healthPoints;
+  FightableDamage(this.diceCount, this.diceSides, int healthPoints)
+    : _healthPoints = healthPoints;
 
   static final _random = Random.secure();
 
@@ -228,7 +221,8 @@ class FightableDamage extends Fightable {
   int get healthPoints => _healthPoints;
 
   @override
-  int get damageRoll => _random.nextInt((diceSides - 1) * diceCount + 1) + diceCount;
+  int get damageRoll =>
+      _random.nextInt((diceSides - 1) * diceCount + 1) + diceCount;
 
   @override
   final int diceCount;
@@ -542,7 +536,8 @@ abstract final class PrivateAbstractionErrorFixed {
   void _privateMethod();
 }
 
-final class PrivateAbstractionErrorImplFixed extends PrivateAbstractionErrorFixed {
+final class PrivateAbstractionErrorImplFixed
+    extends PrivateAbstractionErrorFixed {
   @override
   void _privateMethod() {
     print('Private work');

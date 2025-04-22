@@ -1,4 +1,4 @@
-// ignore_for_file: unused_local_variable, omit_local_variable_types, prefer_final_locals, prefer_const_constructors, unused_catch_stack, unused_label, dead_code, prefer_const_declarations
+// ignore_for_file: unused_local_variable, omit_local_variable_types, prefer_final_locals, prefer_const_constructors, unused_catch_stack, unused_label, dead_code, prefer_const_declarations, unused_import, avoid_catches_without_on_clauses, unrelated_type_equality_checks
 
 import 'dart:async';
 import 'dart:collection';
@@ -247,15 +247,12 @@ void main() {
     'exceptions': exceptions,
   };
 
-  runZonedGuarded(
-    () {
-      for (final MapEntry(:key, :value) in actionMap.entries) {
-        print('\n${'=' * 20}$key${'=' * 20}');
-        value();
-      }
-    },
-    (e, s) => print(e),
-  );
+  runZonedGuarded(() {
+    for (final MapEntry(:key, :value) in actionMap.entries) {
+      print('\n${'=' * 20}$key${'=' * 20}');
+      value();
+    }
+  }, (e, s) => print(e));
 }
 
 // Домашнее задание

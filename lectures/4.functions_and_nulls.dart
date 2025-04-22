@@ -1,4 +1,4 @@
-// ignore_for_file: unused_element, unused_local_variable, avoid_init_to_null, prefer_final_locals, omit_local_variable_types, unused_import
+// ignore_for_file: unused_element, unused_local_variable, avoid_init_to_null, prefer_final_locals, omit_local_variable_types, unused_import, unnecessary_null_comparison
 
 import 'dart:io';
 
@@ -39,14 +39,14 @@ void nullableOperators() {
   //; Операторы доступа
   //* ?[] - Оператор доступа к элементу списка по индексу если список не null (если список нулл вернет null)
   List<int>? numbers = [1, 2, 3, 4, 5];
-  print(numbers?[0]); // 1
+  // print(numbers?[0]); // 1
 
   numbers = null;
   print(numbers?[0]); // null
 
   //* ?. - Оператор доступа к свойству объекта если объект не null (если объект нулл вернет null)
   String? name = 'Ivan';
-  print(name?.length); // 4
+  // print(name?.length); // 4
 
   name = null;
   print(name?.length); // null
@@ -67,7 +67,7 @@ void nullableOperators() {
 
   a = 10;
 
-  print(a ?? 42); // 10
+  // print(a ?? 42); // 10
 
   //* ??= - Оператор присваивания, если null (null-aware assignment operator)
   //? Оператор присваивания, если null присваивает значение справа переменной, если переменная null
@@ -82,9 +82,9 @@ void nullableOperators() {
   List<int>? numbers1 = [1, 2, 3];
   List<int>? numbers2 = null;
 
-  List<int> numbers3 = [...?numbers1, ...?numbers2];
+  // List<int> numbers3 = [...?numbers1, ...?numbers2];
 
-  print(numbers3); // [1, 2, 3]
+  // print(numbers3); // [1, 2, 3]
 }
 
 void autoSmartCasts() {
@@ -195,7 +195,9 @@ void extendedArgs() {
   //; Конечно можно совмещать 1 и 2 типы, но 1 тип всегда идет первым
   // Пример функции, которая принимает два аргумента с именем и один позиционный аргумент
   void printPersonInfo2(String name, {required String city, int? age}) {
-    print('Name: $name, Age after 10 years: ${age == null ? 'Unknown' : age + 10}, City: $city');
+    print(
+      'Name: $name, Age after 10 years: ${age == null ? 'Unknown' : age + 10}, City: $city',
+    );
   }
 
   printPersonInfo2('Ivan', city: 'Saint-Petersburg', age: 19);
@@ -211,7 +213,9 @@ void extendedArgs() {
 
   // Пример функции которая принимает один позиционный аргумент и два опциональных позиционных аргумента
   void printPersonInfo4(String name, [int? age, String city = 'Moscow']) {
-    print('Name: $name, Age in binary: ${age?.toRadixString(2) ?? 0}, City: $city');
+    print(
+      'Name: $name, Age in binary: ${age?.toRadixString(2) ?? 0}, City: $city',
+    );
   }
 
   //; Совмещать 2 и 3 типы аругментов нельзя
@@ -307,7 +311,7 @@ void main() {
     'lexicalScope': lexicalScope,
     'extendedArgs': extendedArgs,
     'recursion': recursion,
-    'listTricks': listTricks
+    'listTricks': listTricks,
   };
 
   for (final MapEntry(key: name, value: action) in actions.entries) {

@@ -1,4 +1,4 @@
-// ignore_for_file: unnecessary_statements, unused_local_variable, prefer_function_declarations_over_variables, prefer_final_locals, omit_local_variable_types, unused_element, unnecessary_lambdas, cascade_invocations
+// ignore_for_file: unnecessary_statements, unused_local_variable, prefer_function_declarations_over_variables, prefer_final_locals, omit_local_variable_types, unused_element, unnecessary_lambdas, cascade_invocations, avoid_types_on_closure_parameters
 
 import 'dart:math';
 
@@ -53,7 +53,8 @@ void anonymousFunctions() {
 
   //? Функциональный тип
   int Function(int, int) anotherSumFunction = sumFunction;
-  String Function(int, {required String name}) namedFunction = (int someInt, {required String name}) => name * someInt;
+  String Function(int, {required String name}) namedFunction =
+      (int someInt, {required String name}) => name * someInt;
   double Function(double, [double]) powFunction = (double x, [double e = 1]) {
     return pow(x, e).toDouble();
   };
@@ -89,10 +90,7 @@ void anonymousFunctions() {
   //? Так как анонимные функции не имеют имени, то их сложно использовать в качестве типов
   //? Запись типа функции как входного и(или) выходного значения занимает много места
 
-  int? findOrNull({
-    required IntPredicate predicate,
-    required List<int> list,
-  }) {
+  int? findOrNull({required IntPredicate predicate, required List<int> list}) {
     for (final el in list) {
       if (predicate(el)) return el;
     }
@@ -192,24 +190,14 @@ void builtinAnonymousFunctions() {
 
   //; List
   //* Генератор
-  final list = List<int>.generate(
-    10,
-    (index) => index,
-  );
+  final list = List<int>.generate(10, (index) => index);
 
-  final randomList = List<int>.generate(
-    10,
-    (_) => generator.nextInt(101),
-  );
+  final randomList = List<int>.generate(10, (_) => generator.nextInt(101));
 
   // Аналогично
-  final oldList = [
-    for (var i = 0; i < 10; i++) i,
-  ];
+  final oldList = [for (var i = 0; i < 10; i++) i];
 
-  final oldRandomList = [
-    for (var i = 0; i < 10; i++) generator.nextInt(101),
-  ];
+  final oldRandomList = [for (var i = 0; i < 10; i++) generator.nextInt(101)];
 
   //* Методы
   //? where (фильтр) - фильтрация
@@ -249,7 +237,13 @@ void builtinAnonymousFunctions() {
   descendingList.sort((a, b) => b.compareTo(a));
 
   //? forEach - итератор
-  final students = ['Habuba', 'Marcus', 'Ivan', 'Paul', 'BoldMan (Dota2 ubeite menya katanoi)'];
+  final students = [
+    'Habuba',
+    'Marcus',
+    'Ivan',
+    'Paul',
+    'BoldMan (Dota2 ubeite menya katanoi)',
+  ];
   students.forEach(print);
 
   final namedResults = {
@@ -301,16 +295,18 @@ void cascadeOperator() {
   final generator = Random();
   final offset = List.generate(20, (index) => generator.nextInt(101));
 
-  final advancedListTrue = (offset.where((element) => element <= 50).toList()
-        ..removeWhere((element) => element.isOdd)
-        ..sort((a, b) => b.compareTo(a)))
-      .map((element) => element * element)
-      .toList();
+  final advancedListTrue =
+      (offset.where((element) => element <= 50).toList()
+            ..removeWhere((element) => element.isOdd)
+            ..sort((a, b) => b.compareTo(a)))
+          .map((element) => element * element)
+          .toList();
 
-  final advancedListFalse = offset.where((element) => element <= 50).toList()
-    ..removeWhere((element) => element.isOdd)
-    ..sort((a, b) => b.compareTo(a))
-    ..map((element) => element * element);
+  final advancedListFalse =
+      offset.where((element) => element <= 50).toList()
+        ..removeWhere((element) => element.isOdd)
+        ..sort((a, b) => b.compareTo(a))
+        ..map((element) => element * element);
 
   print(advancedListFalse);
   print(advancedListTrue);
@@ -376,10 +372,12 @@ void syncStar() {
   }
 
   print(
-    range(100, 1000).where((e) {
-      final str = e.toString().split('');
-      return str.first == str.last;
-    }).take(10),
+    range(100, 1000)
+        .where((e) {
+          final str = e.toString().split('');
+          return str.first == str.last;
+        })
+        .take(10),
   );
 
   //* Методы map, where, forEach и другие работают с sync*

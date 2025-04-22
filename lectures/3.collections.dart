@@ -1,4 +1,4 @@
-// ignore_for_file: omit_local_variable_types, unused_local_variable, prefer_final_locals, prefer_const_declarations, unnecessary_const, cascade_invocations, prefer_final_in_for_each, unnecessary_statements
+// ignore_for_file: omit_local_variable_types, unused_local_variable, prefer_final_locals, prefer_const_declarations, unnecessary_const, cascade_invocations, prefer_final_in_for_each, unnecessary_statements, prefer_foreach
 
 import 'dart:collection';
 import 'dart:math';
@@ -90,11 +90,7 @@ void maps() {
   //* Map<Key, Value> - ассоциативный массив, словарь, хранящий пары ключ-значение
 
   // Примеры
-  Map<String, int> ages = {
-    'Alice': 25,
-    'Bob': 30,
-    'Charlie': 35,
-  };
+  Map<String, int> ages = {'Alice': 25, 'Bob': 30, 'Charlie': 35};
 
   var cities = <String, String>{
     'Moscow': 'Russia',
@@ -103,11 +99,7 @@ void maps() {
   };
 
   //! Предпочтительный вариант
-  final capitals = {
-    'Russia': 'Moscow',
-    'Germany': 'Berlin',
-    'France': 'Paris',
-  };
+  final capitals = {'Russia': 'Moscow', 'Germany': 'Berlin', 'France': 'Paris'};
 
   const constCapitals = const {
     'Russia': 'Moscow',
@@ -150,6 +142,7 @@ void sets() {
   // Примеры
   Set<int> numbers = {1, 2, 3, 4, 5};
   var strings = <String>{'Hello', 'World', 'Dart'};
+  // ignore: equal_elements_in_set
   final booleans = <bool>{true, false, true};
 
   // const и unmodifiableSet как и в листах и мапах
@@ -175,16 +168,8 @@ void spreadOperators() {
   final moreCities = {'London', ...cities, 'New York', 'Tokyo'};
   print('moreCities: $moreCities');
 
-  final capitals = {
-    'Russia': 'Moscow',
-    'Germany': 'Berlin',
-    'France': 'Paris',
-  };
-  final moreCapitals = {
-    'USA': 'Washington',
-    ...capitals,
-    'Japan': 'Tokyo',
-  };
+  final capitals = {'Russia': 'Moscow', 'Germany': 'Berlin', 'France': 'Paris'};
+  final moreCapitals = {'USA': 'Washington', ...capitals, 'Japan': 'Tokyo'};
   print('moreCapitals: $moreCapitals\n');
 
   //? Spread-операторы можно использовать для создания копий коллекций
@@ -234,11 +219,7 @@ void forInLoop() {
     print(number);
   }
 
-  final someMap = {
-    'Alice': 25,
-    'Bob': 30,
-    'Charlie': 35,
-  };
+  final someMap = {'Alice': 25, 'Bob': 30, 'Charlie': 35};
   for (final key in someMap.keys) {
     print('key: $key');
   }

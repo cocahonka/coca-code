@@ -1,4 +1,4 @@
-// ignore_for_file: cascade_invocations, unused_field, prefer_final_fields, prefer_const_declarations, unused_local_variable, prefer_const_constructors, unnecessary_type_check, omit_local_variable_types, sort_constructors_first
+// ignore_for_file: cascade_invocations, unused_field, prefer_final_fields, prefer_const_declarations, unused_local_variable, prefer_const_constructors, unnecessary_type_check, omit_local_variable_types, sort_constructors_first, prefer_constructors_over_static_methods, avoid_setters_without_getters, unnecessary_getters_setters, avoid_classes_with_only_static_members
 
 // План
 //? Методы
@@ -45,10 +45,11 @@ void gettersAndSetters() {
   student.info = 'John Doe;25;180';
 
   // Использование каскадных операторов выглядит более лаконично
-  final marcus = Student()
-    ..name = '   Marcus     '
-    ..height = 169
-    ..age = 20;
+  final marcus =
+      Student()
+        ..name = '   Marcus     '
+        ..height = 169
+        ..age = 20;
   print('info: ${marcus.info}, is adult: ${marcus.isAdult}');
 
   //; В идеале геттеры и сеттеры должны быть простыми и не выполнять сложные операции
@@ -112,7 +113,8 @@ class HomeworkStudent {
   final int id;
 
   double get averageMark => _marks.reduce((a, b) => a + b) / _marks.length;
-  String get formattedInfo => 'Name: $name, ID: $id, Average mark: $averageMark, Marks: $_marks';
+  String get formattedInfo =>
+      'Name: $name, ID: $id, Average mark: $averageMark, Marks: $_marks';
 
   void addMark(int mark) => _marks.add(mark);
 }
@@ -155,8 +157,10 @@ class FantasySword {
   FantasySword(this._name);
 
   String _name;
-  String get name => 'The Legendary ${_name[0].toUpperCase() + _name.substring(1)}';
-  set name(String value) => _name = value.toLowerCase().split('').reversed.join();
+  String get name =>
+      'The Legendary ${_name[0].toUpperCase() + _name.substring(1)}';
+  set name(String value) =>
+      _name = value.toLowerCase().split('').reversed.join();
 }
 
 void staticFieldsAndMethods() {
@@ -247,10 +251,7 @@ void lateKeyword() {
 }
 
 class DiceRoll {
-  DiceRoll({
-    required this.sidesCount,
-    required int throwCount,
-  }) {
+  DiceRoll({required this.sidesCount, required int throwCount}) {
     this.throwCount = powBy2(throwCount);
   }
 
@@ -261,7 +262,10 @@ class DiceRoll {
 
   int powBy2(int value) => value * value;
 
-  late final List<int> _rolls = List.generate(throwCount, (_) => _random.nextInt(sidesCount) + 1);
+  late final List<int> _rolls = List.generate(
+    throwCount,
+    (_) => _random.nextInt(sidesCount) + 1,
+  );
   late int maxRoll = () {
     print('Max Roll has been init');
     return _rolls.reduce(max);
@@ -297,9 +301,7 @@ void constConstructors() {
 class Point {
   const Point(this.x, this.y);
 
-  const Point.zero()
-      : x = 0,
-        y = 0;
+  const Point.zero() : x = 0, y = 0;
 
   final int x;
   final int y;
@@ -347,10 +349,11 @@ void fabricConstructor() {
   print(logger4 == logger3);
 
   // Пример 3
-  final marcusStudent = Student()
-    ..name = 'Marcus'
-    ..age = 20
-    ..height = 169;
+  final marcusStudent =
+      Student()
+        ..name = 'Marcus'
+        ..age = 20
+        ..height = 169;
 
   final user = User.fromStudent(marcusStudent);
   print(marcusStudent.info);
@@ -449,20 +452,18 @@ void asAndIs() {
   //* 3. is! - проверка что объект не является указанным типом
 
   // Пример
-  final student = Student()
-    ..name = 'Marcus'
-    ..age = 20
-    ..height = 169;
+  final student =
+      Student()
+        ..name = 'Marcus'
+        ..age = 20
+        ..height = 169;
 
   final user = User.fromStudent(student);
 
   if (user is User) print('User is User');
   if (student is User) print('Student is User');
 
-  final unknownMap = <String, Object>{
-    'age': 20,
-    'name': 'John',
-  };
+  final unknownMap = <String, Object>{'age': 20, 'name': 'John'};
 
   final (age, name) = (unknownMap['age']!, unknownMap['name']!);
   print(age is int);

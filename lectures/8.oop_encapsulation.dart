@@ -1,4 +1,4 @@
-// ignore_for_file: omit_local_variable_types, prefer_final_locals, unused_local_variable, cascade_invocations, prefer_initializing_formals, unnecessary_this, sort_constructors_first
+// ignore_for_file: omit_local_variable_types, prefer_final_locals, unused_local_variable, cascade_invocations, prefer_initializing_formals, unnecessary_this, sort_constructors_first, unused_import
 
 import 'dart:collection';
 import 'dart:io';
@@ -236,17 +236,14 @@ class Point {
   final int x;
   final int y;
 
-  Point(int x, int y)
-      : x = x,
-        y = y;
+  Point(int x, int y) : x = x, y = y;
 
-  Point.zero()
-      : x = 0,
-        y = 0;
+  Point.zero() : x = 0, y = 0;
 }
 
 class DiceRoll {
-  DiceRoll({required this.edges, required this.count}) : maxPoints = edges * count;
+  DiceRoll({required this.edges, required this.count})
+    : maxPoints = edges * count;
 
   final int edges;
   final int count;
@@ -262,47 +259,47 @@ class ClassWithConstructor {
   //* Теперь дефолтный конструктор принимает два параметра
   //* И теперь нельзя создать объект просто через ClassWithConstructor();
   //!!! Поля класса должны быть обязательно иницилизированы ДО тела конструктора
-  ClassWithConstructor(String name, int age)
-      : name = name,
-        age = age;
+  ClassWithConstructor(String name, int age) : name = name, age = age;
 
-  ClassWithConstructor.fullData(String name, int age)
-      : name = name,
-        age = age;
+  ClassWithConstructor.fullData(String name, int age) : name = name, age = age;
 
   //* this - это ссылка на текущий объект (решение проблемы с пересекающимся lexical scope)
   ClassWithConstructor.fullDataWithThis(String name, int age)
-      : this.name = name,
-        this.age = age;
+    : this.name = name,
+      this.age = age;
 
   ClassWithConstructor.fullDataNamed({required String name, required int age})
-      : name = name,
-        age = age;
+    : name = name,
+      age = age;
 
-  ClassWithConstructor.fullDataNamedWithDefault({String name = 'Ivan', int age = 19})
-      : name = name,
-        age = age;
+  ClassWithConstructor.fullDataNamedWithDefault({
+    String name = 'Ivan',
+    int age = 19,
+  }) : name = name,
+       age = age;
 
-  ClassWithConstructor.fullDataNamedWithDefaultAndBody({String name = 'Ivan', int age = 19})
-      : name = name,
-        age = age {
+  ClassWithConstructor.fullDataNamedWithDefaultAndBody({
+    String name = 'Ivan',
+    int age = 19,
+  }) : name = name,
+       age = age {
     print('Object created with name: $name and age: $age');
   }
 
-  ClassWithConstructor.zeroData()
-      : name = 'Ivan',
-        age = 19;
+  ClassWithConstructor.zeroData() : name = 'Ivan', age = 19;
 
-  ClassWithConstructor.fullDataWithAnotherVariableNames({String surname = 'Ivanov'})
-      : name = surname,
-        age = surname.length;
+  ClassWithConstructor.fullDataWithAnotherVariableNames({
+    String surname = 'Ivanov',
+  }) : name = surname,
+       age = surname.length;
 
   //* Сокращенные конструкторы (рекомендованные к использованию)
   ClassWithConstructor.short(this.name, this.age);
 
   ClassWithConstructor.namedShort({required this.name, required this.age});
 
-  ClassWithConstructor.combined(String someName, {required this.age}) : name = someName;
+  ClassWithConstructor.combined(String someName, {required this.age})
+    : name = someName;
 }
 
 void halfOfEncapsulation() {
@@ -322,29 +319,22 @@ void halfOfEncapsulation() {
 }
 
 class Monster {
-  Monster({
-    required this.name,
-    required int health,
-    required this.damage,
-  }) : _health = health;
+  Monster({required this.name, required int health, required this.damage})
+    : _health = health;
 
-  Monster.human({
-    required int health,
-    required this.damage,
-  })  : _health = health,
-        name = 'Human';
+  Monster.human({required int health, required this.damage})
+    : _health = health,
+      name = 'Human';
 
   //* Вызов конструктора из конструктора
   //Monster.goblin() : this(name: 'Goblin', health: 120, damage: 5);
-  Monster.goblin()
-      : name = 'Goblin',
-        _health = 120,
-        damage = 5;
+  Monster.goblin() : name = 'Goblin', _health = 120, damage = 5;
 
   Monster.orc() : this(name: 'Orc', health: 200, damage: 10);
 
   Monster.godHuman() : this.human(health: 999999, damage: 999999);
-  Monster.mutation(String name) : this(name: name, health: 999999, damage: 999999);
+  Monster.mutation(String name)
+    : this(name: name, health: 999999, damage: 999999);
 
   final String name;
   int _health;

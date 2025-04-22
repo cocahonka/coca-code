@@ -76,8 +76,10 @@ void generics2() {
   stringMapCache.setByKey('key', 'string');
   // stringMapCache.setByKey('key', 1); //! Error: The argument type 'int' can't be assigned to the parameter type 'String'.
 
+  //! Ошибка новичка (не указан тип) = MapCache<dynamic>
   // ignore: inference_failure_on_instance_creation
-  final objectMapCache = MapCache(); //! Ошибка новичка (не указан тип) = MapCache<dynamic>
+  final objectMapCache = MapCache();
+
   //* Если и нужен общий тип, то используйте Object или Object?
   final realObjectMapCache = MapCache<Object>();
   realObjectMapCache.setByKey('key', 1);
@@ -85,7 +87,9 @@ void generics2() {
 
   //? Пример c функцией
   final twoInts = returnTwo<int>(1);
-  final twoBools = returnTwo(true); //; Можно и не ставить тип, так как Dart сам поймет
+  final twoBools = returnTwo(
+    true,
+  ); //; Можно и не ставить тип, так как Dart сам поймет
   final twoStrings = returnTwo('string');
 
   final list = ['some', 'list', 'of', 'strings'];
@@ -140,7 +144,10 @@ final class MapCache<T> implements Cache<T> {
 
 (T first, T second) returnTwo<T>(T value) => (value, value);
 
-void forEachIndexed<T>(List<T> list, void Function(int index, T element) action) {
+void forEachIndexed<T>(
+  List<T> list,
+  void Function(int index, T element) action,
+) {
   for (var i = 0; i < list.length; i++) {
     action(i, list[i]);
   }
@@ -233,10 +240,7 @@ final class LootBox<T> {
 }
 
 abstract base class Item {
-  Item({
-    required this.name,
-    required this.value,
-  });
+  Item({required this.name, required this.value});
 
   final String name;
   final int value;
@@ -500,7 +504,8 @@ final class Vector {
   Vector operator -(Vector v) => Vector(x - v.x, y - v.y);
 
   @override
-  bool operator ==(Object other) => other is Vector && x == other.x && y == other.y;
+  bool operator ==(Object other) =>
+      other is Vector && x == other.x && y == other.y;
 
   @override
   int get hashCode => Object.hash(x, y);
@@ -549,7 +554,8 @@ final class Cache2<K, V> {
   final Map<K, V> _cache = {};
 
   //* Инвертирование ключей и значений
-  K? operator [](V value) => _cache.keys.firstWhereOrNull((key) => _cache[key] == value);
+  K? operator [](V value) =>
+      _cache.keys.firstWhereOrNull((key) => _cache[key] == value);
 
   //* Не меняем значение, а только добавляем
   void operator []=(K key, V value) => _cache.putIfAbsent(key, () => value);
@@ -591,7 +597,8 @@ void conclusion() {
 //; sum average
 
 extension NumIterableExtension<T extends num> on Iterable<T> {
-  double get average => isEmpty ? 0 : reduce((value, element) => (value + element) as T) / length;
+  double get average =>
+      isEmpty ? 0 : reduce((value, element) => (value + element) as T) / length;
 
   T get sum {
     num sum = 0;

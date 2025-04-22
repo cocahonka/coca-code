@@ -47,7 +47,12 @@ void inheritance() {
 
   final studentIvan = Student([], '123456', 'Ivan', 19, gender: Gender.male);
   final studentMarcus = Student.marcus([5, 4, 3, 5, 5], '654321');
-  final studentOfSuai = SuaiStudent('654321', 'Habuba', 12, gender: Gender.male);
+  final studentOfSuai = SuaiStudent(
+    '654321',
+    'Habuba',
+    12,
+    gender: Gender.male,
+  );
 
   studentIvan.introduce();
   studentIvan.introduceStudent();
@@ -109,16 +114,12 @@ base class Student extends Person {
 
   //* Развернутый синтаксис конструктора
   Student.marcus(List<int> marks, this.passId)
-      : _marks = [...marks],
-        super('Marcus', 20, gender: Gender.male);
+    : _marks = [...marks],
+      super('Marcus', 20, gender: Gender.male);
 
-  Student.withGender(
-    List<int> marks,
-    this.passId,
-    String name,
-    int age,
-  )   : _marks = [...marks],
-        super(name, age, gender: Gender.female);
+  Student.withGender(List<int> marks, this.passId, String name, int age)
+    : _marks = [...marks],
+      super(name, age, gender: Gender.female);
 
   final String passId;
   final List<int> _marks;
@@ -146,18 +147,14 @@ base class Student extends Person {
 }
 
 final class SuaiStudent extends Student {
-  SuaiStudent(
-    String passId,
-    String name,
-    int age, {
-    required Gender gender,
-  }) : super(
-          [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
-          passId,
-          name,
-          age,
-          gender: gender,
-        );
+  SuaiStudent(String passId, String name, int age, {required Gender gender})
+    : super(
+        [5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5],
+        passId,
+        name,
+        age,
+        gender: gender,
+      );
 }
 
 void polymorphism() {
@@ -565,7 +562,6 @@ class Locker {
   bool tryUnlock() => _random.nextDouble() >= 0.25;
 }
 */
-
 
 //? 4. Виджеты
 //* Вам нужно реализовать простую систему виджетов, которая позволяет строить деревья виджетов и выводить их на экран.

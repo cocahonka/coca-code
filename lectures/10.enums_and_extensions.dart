@@ -74,12 +74,24 @@ void enums() {
     return false;
   }
 
-  print("Validate 'jiger' by inputWord rule : ${validateWordle('jiger', WordleValidator.inputWord)}");
-  print("Validate 'migger' by inputWord rule : ${validateWordle('migger', WordleValidator.inputWord)}");
-  print("Validate 'yes' by yesOrNo rule : ${validateWordle('yes', WordleValidator.yesOrNo)}");
-  print("Validate 'n' by yesOrNo rule : ${validateWordle('n', WordleValidator.yesOrNo)}");
-  print("Validate '1' by attemps rule : ${validateWordle('1', WordleValidator.attemps)}");
-  print("Validate '1.5' by attemps rule : ${validateWordle('1.5', WordleValidator.attemps)}");
+  print(
+    "Validate 'jiger' by inputWord rule : ${validateWordle('jiger', WordleValidator.inputWord)}",
+  );
+  print(
+    "Validate 'migger' by inputWord rule : ${validateWordle('migger', WordleValidator.inputWord)}",
+  );
+  print(
+    "Validate 'yes' by yesOrNo rule : ${validateWordle('yes', WordleValidator.yesOrNo)}",
+  );
+  print(
+    "Validate 'n' by yesOrNo rule : ${validateWordle('n', WordleValidator.yesOrNo)}",
+  );
+  print(
+    "Validate '1' by attemps rule : ${validateWordle('1', WordleValidator.attemps)}",
+  );
+  print(
+    "Validate '1.5' by attemps rule : ${validateWordle('1.5', WordleValidator.attemps)}",
+  );
 }
 
 enum Direction { north, east, south, west }
@@ -249,16 +261,7 @@ void finiteStateMachine() {
   //? Реализация
   //* Создадим конечный автомат, который будет управлять состоянием вордли
 
-  final input = [
-    '4',
-    'word',
-    'joker',
-    'lamp',
-    'yes',
-    'fish',
-    'lamp',
-    'no',
-  ];
+  final input = ['4', 'word', 'joker', 'lamp', 'yes', 'fish', 'lamp', 'no'];
 
   var state = WordleState.initState;
   const secretWord = 'lamp';
@@ -284,12 +287,24 @@ void finiteStateMachine() {
 
   // Пример 2
   // Валидация вордли с использованием FSM
-  print("Validate 'jiger' by inputWord rule : ${WordleValidatorEnhanced.inputWordValidation.validate('jiger')}");
-  print("Validate 'migger' by inputWord rule : ${WordleValidatorEnhanced.inputWordValidation.validate('migger')}");
-  print("Validate 'yes' by yesOrNo rule : ${WordleValidatorEnhanced.yesOrNoValidation.validate('yes')}");
-  print("Validate 'n' by yesOrNo rule : ${WordleValidatorEnhanced.yesOrNoValidation.validate('n')}");
-  print("Validate '1' by attemps rule : ${WordleValidatorEnhanced.attempsValidation.validate('1')}");
-  print("Validate '1.5' by attemps rule : ${WordleValidatorEnhanced.attempsValidation.validate('1.5')}");
+  print(
+    "Validate 'jiger' by inputWord rule : ${WordleValidatorEnhanced.inputWordValidation.validate('jiger')}",
+  );
+  print(
+    "Validate 'migger' by inputWord rule : ${WordleValidatorEnhanced.inputWordValidation.validate('migger')}",
+  );
+  print(
+    "Validate 'yes' by yesOrNo rule : ${WordleValidatorEnhanced.yesOrNoValidation.validate('yes')}",
+  );
+  print(
+    "Validate 'n' by yesOrNo rule : ${WordleValidatorEnhanced.yesOrNoValidation.validate('n')}",
+  );
+  print(
+    "Validate '1' by attemps rule : ${WordleValidatorEnhanced.attempsValidation.validate('1')}",
+  );
+  print(
+    "Validate '1.5' by attemps rule : ${WordleValidatorEnhanced.attempsValidation.validate('1.5')}",
+  );
 
   //; Если мы добавим новое значение в enum, то switch заставит нас обработать его!!!
 }
@@ -302,10 +317,10 @@ enum WordleState {
   static WordleState get initState => WordleState.inputAttemps;
 
   WordleState get nextState => switch (this) {
-        WordleState.inputAttemps => WordleState.inputGuess,
-        WordleState.inputGuess => WordleState.inputPlayDesire,
-        WordleState.inputPlayDesire => WordleState.inputGuess,
-      };
+    WordleState.inputAttemps => WordleState.inputGuess,
+    WordleState.inputGuess => WordleState.inputPlayDesire,
+    WordleState.inputPlayDesire => WordleState.inputGuess,
+  };
 }
 
 enum WordleValidatorEnhanced {
@@ -317,13 +332,17 @@ enum WordleValidatorEnhanced {
     final formattedInput = input.trim().toLowerCase();
 
     return switch (this) {
-      WordleValidatorEnhanced.inputWordValidation => input.length == 5 && input.contains(RegExp('[a-z]')),
-      WordleValidatorEnhanced.yesOrNoValidation => const ['yes', 'no'].contains(formattedInput),
+      WordleValidatorEnhanced.inputWordValidation =>
+        input.length == 5 && input.contains(RegExp('[a-z]')),
+      WordleValidatorEnhanced.yesOrNoValidation => const [
+        'yes',
+        'no',
+      ].contains(formattedInput),
       // Создаем анонимную функцию! Чтобы можно было вставить несколько строк
       WordleValidatorEnhanced.attempsValidation => () {
-          final numericValue = int.tryParse(input);
-          return numericValue != null && numericValue > 0;
-        }(),
+        final numericValue = int.tryParse(input);
+        return numericValue != null && numericValue > 0;
+      }(),
     };
   }
 }
@@ -431,16 +450,21 @@ extension StringExtension on String {
 
   int parse() => int.parse(this);
 
-  String capitalize() => isNotEmpty ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}' : this;
+  String capitalize() =>
+      isNotEmpty
+          ? '${this[0].toUpperCase()}${substring(1).toLowerCase()}'
+          : this;
 }
 
 // Расширение для List<int>, List<double>
 extension ListIntExtension on List<int> {
-  double get average => isEmpty ? 0 : reduce((value, element) => value + element) / length;
+  double get average =>
+      isEmpty ? 0 : reduce((value, element) => value + element) / length;
 }
 
 extension ListDoubleExtension on List<double> {
-  double get average => isEmpty ? 0 : reduce((value, element) => value + element) / length;
+  double get average =>
+      isEmpty ? 0 : reduce((value, element) => value + element) / length;
 }
 //? Дублирование кода?
 //* К сожалению мы пока что не в силах убрать дублирование кода
@@ -476,16 +500,14 @@ extension ListObjectExtension on List<Object> {
 extension ListListObjectExtensions on List<List<Object>> {
   List<Object> get flatten => expand((element) => element).toList();
 
-  (List<Object>, List<Object>) unzip() => fold(
-        (<Object>[], <Object>[]),
-        (record, element) {
-          assert(element.length == 2);
+  (List<Object>, List<Object>) unzip() =>
+      fold((<Object>[], <Object>[]), (record, element) {
+        assert(element.length == 2);
 
-          record.$1.add(element.first);
-          record.$2.add(element.last);
-          return record;
-        },
-      );
+        record.$1.add(element.first);
+        record.$2.add(element.last);
+        return record;
+      });
 }
 
 // Расширение для Enum

@@ -227,7 +227,8 @@ base class SoundArtist {
 base mixin MusicalPerformer on SoundArtist {
   void performerMethod() {
     print('Performing music!');
-    super.musicianMethod(); //* Мы можем использовать super и брать реализую из суперкласса
+    super
+        .musicianMethod(); //* Мы можем использовать super и брать реализую из суперкласса
   }
 }
 
@@ -272,8 +273,12 @@ void mixins6() {
 
   // Пример с композицией
   final counter2 = Counter2();
-  counter2.changeNotifier.addListener(() => print('Listener 1: ${counter2.count}'));
-  counter2.changeNotifier.addListener(() => print('Listener 2: ${counter2.count}'));
+  counter2.changeNotifier.addListener(
+    () => print('Listener 1: ${counter2.count}'),
+  );
+  counter2.changeNotifier.addListener(
+    () => print('Listener 2: ${counter2.count}'),
+  );
 }
 
 //* Здесь композиция лучше смотрится, так как наша цель использовать полиморфизм подтипов
